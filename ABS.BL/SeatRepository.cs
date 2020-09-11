@@ -18,8 +18,7 @@ namespace ABS.BL
                                               .FirstOrDefault();
 
                 // Checks if such section is already associated with the flight
-                var existingSection = context.Seats.Where(s => s.FlightId == flight.FlightId)
-                                                   .Where(s => s.SectionId == section.SectionId)
+                var existingSection = context.Seats.Where(s => s.FlightId == flight.FlightId && s.SectionId == section.SectionId)
                                                    .FirstOrDefault();
                 if (existingSection != null)
                     throw new Exception(ExceptionHelper.ExistingSection);
@@ -46,8 +45,7 @@ namespace ABS.BL
         {
             using (var context = new ABS())
             {
-                var freeSeatForFlight = context.Seats.Where(s => s.FlightId == fl.FlightId)
-                                                     .Where(s => s.Status == true)
+                var freeSeatForFlight = context.Seats.Where(s => s.FlightId == fl.FlightId && s.Status == true)
                                                      .FirstOrDefault();
                 if (freeSeatForFlight == null)
                     return false;
@@ -61,8 +59,7 @@ namespace ABS.BL
             using (var context = new ABS())
             {
                 var freeSeatForFlight = context.Seats.Include(co => co.Section)
-                                                     .Where(s => s.FlightId == fl.FlightId)
-                                                     .Where(s => s.Status == true)
+                                                     .Where(s => s.FlightId == fl.FlightId && s.Status == true)
                                                      .ToList();
 
                 return freeSeatForFlight;
@@ -109,7 +106,8 @@ namespace ABS.BL
                     var query = context.Seats.Where(s => s.FlightId == flight.FlightId);
                     foreach (string name in Enum.GetNames(typeof(SeatClass)))
                     {
-                        var section = context.Sections.Where(m => m.SeatClassName == name).FirstOrDefault();
+                        var section = context.Sections.Where(m => m.SeatClassName == name)
+                                                      .FirstOrDefault();
                         builder.Append($"\n {name} \n");
                         foreach (var seat in query.Where(s => s.SectionId == section.SectionId))
                         {
@@ -129,10 +127,10 @@ namespace ABS.BL
             {
                 var section = context.Sections.Where(s => s.SeatClassName == seatClass.ToString())
                                               .FirstOrDefault();
-                var seatToBook = context.Seats.Where(s => s.FlightId == flight.FlightId)
-                                              .Where(s => s.SectionId == section.SectionId)
-                                              .Where(s => s.Row == row)
-                                              .Where(s => s.Col == col)
+                var seatToBook = context.Seats.Where(s => s.FlightId == flight.FlightId 
+                                                       && s.SectionId == section.SectionId
+                                                       && s.Row == row
+                                                       && s.Col == col)
                                               .FirstOrDefault();
 
                 if (seatToBook.Status == false)

@@ -449,6 +449,7 @@ namespace Program
             this.flightsFind.TabIndex = 38;
             this.flightsFind.Text = "Find Flights";
             this.flightsFind.UseVisualStyleBackColor = true;
+            this.flightsFind.Visible = false;
             this.flightsFind.Click += new System.EventHandler(this.flightsFind_Click);
             // 
             // label16

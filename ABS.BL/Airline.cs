@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ABS.BL
 {
@@ -26,7 +27,10 @@ namespace ABS.BL
             set
             {
                 if (value.Length > 6 || value.Length < 1)
-                    throw new Exception(ExceptionHelper.InvalidAirlineName);
+                    throw new Exception(ExceptionHelper.InvalidAirlineNameSize);
+
+                if (!Regex.IsMatch(value, @"^[A-Za-z][A-Za-z.]+$"))
+                    throw new Exception(ExceptionHelper.InvalidAirlineNameCharacters);
 
                 _name = value;
             }

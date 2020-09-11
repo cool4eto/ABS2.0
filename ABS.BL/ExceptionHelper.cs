@@ -6,11 +6,13 @@ namespace ABS.BL
 {
     public static class ExceptionHelper
     {
-        public const string InvalidAirlineName = "Airline name must be less than 6 characters!";
+        public const string InvalidAirlineNameSize = "Airline name must be 1 to 6 characters!";
+        public const string InvalidAirlineNameCharacters = "Airline name must not contain special characters!";
         public const string NullAirlineName = "Airline name can't be null or empty!";
         public const string NonExistentAirline = "Airline does not exist!";
         public const string AlreadyExistentAirline = "Airline already exists!";
-        public const string InvalidAirportName = "Airport name must be exactly 3 Characters!";
+        public const string InvalidAirportNameSize = "Airport name must be exactly 3 Characters!";
+        public const string InvalidAirportNameCharacters = "Airport name must not contain special characters!";
         public const string NullAirportName = "Airport name can't be null or empty!";
         public const string NonExistentAirport = "Airport does not exist!";
         public const string NonExistentFlight = "Flight does not exist!";

@@ -14,8 +14,7 @@ namespace ABS.BL
         {
             using (var context = new ABS())
             {
-                var flight1 = context.Flights.Where(f => f.AirlineId == flight.AirlineId)
-                                             .Where(f => f.FlightName == flight.FlightName)
+                var flight1 = context.Flights.Where(f => f.AirlineId == flight.AirlineId && f.FlightName == flight.FlightName)
                                              .FirstOrDefault();
                 if (flight1 != null)
                     throw new Exception(ExceptionHelper.AlreadyExistentFlight);
@@ -28,8 +27,7 @@ namespace ABS.BL
         {
             using (var context = new ABS())
             {
-                var flight1 = context.Flights.Where(f => f.AirlineId == airlineId)
-                                                 .Where(f => f.FlightName == flightName)
+                var flight1 = context.Flights.Where(f => f.AirlineId == airlineId && f.FlightName == flightName)
                                                  .FirstOrDefault();
                 if (flight1 == null)
                     throw new Exception(ExceptionHelper.NonExistentFlight);
@@ -66,8 +64,7 @@ namespace ABS.BL
             using (var context = new ABS())
             {
                 var flightsFromOrigToDest = context.Flights.Include(co => co.Airline)
-                                                           .Where(f => f.OrgAirportId == originAirport.AirportId)
-                                                           .Where(f => f.DestAirportId == destinationAirport.AirportId)
+                                                           .Where(f => f.OrgAirportId == originAirport.AirportId && f.DestAirportId == destinationAirport.AirportId)
                                                            .ToList();
                 // ToList is used to not dispose dbcontext before we need it
                 return flightsFromOrigToDest; 

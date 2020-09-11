@@ -31,8 +31,10 @@ namespace ABS.BL
             set
             {
                 // Matches the passed string against regex to ensure that it is exactly three upper case letters.
-                if (value.Length != 3 || !Regex.IsMatch(value, @"[A-Z]{3}"))
-                    throw new Exception(ExceptionHelper.InvalidAirportName);
+                if (value.Length != 3)
+                    throw new Exception(ExceptionHelper.InvalidAirportNameSize);
+                if (!Regex.IsMatch(value, @"[A-Za-z]{3}"))
+                    throw new Exception(ExceptionHelper.InvalidAirportNameCharacters);
 
                 _name = value;
             }
